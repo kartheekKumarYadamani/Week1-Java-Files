@@ -1,4 +1,4 @@
-package WEEK1.task3.Entity;
+package WEEK1.task3;
 
 import java.util.List;
 

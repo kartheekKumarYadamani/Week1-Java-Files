@@ -1,7 +1,4 @@
-package WEEK1.task6.Service;
-
-import WEEK1.task6.Entity.Notification;
-import WEEK1.task6.Functional.NotificationSender;
+package WEEK1.task6;
 
 import java.util.HashMap;
 import java.util.Map;

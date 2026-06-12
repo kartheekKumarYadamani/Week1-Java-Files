@@ -1,7 +1,5 @@
 package WEEK1.task1;
 
-import WEEK1.task1.Entity.Employee;
-
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;

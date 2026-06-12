@@ -1,4 +1,4 @@
-package WEEK1.task4.Entity;
+package WEEK1.task4;
 
 public class Customer {
     private Integer customerId;

@@ -1,7 +1,4 @@
-package WEEK1.task2.Service;
-
-import WEEK1.task2.Entity.Course;
-import WEEK1.task2.Entity.Student;
+package WEEK1.task2;
 
 import java.util.ArrayList;
 import java.util.Comparator;

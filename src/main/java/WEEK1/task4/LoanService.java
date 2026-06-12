@@ -1,7 +1,4 @@
-package WEEK1.task4.Service;
-
-import WEEK1.task4.Entity.Customer;
-import WEEK1.task4.Functional.LoanRule;
+package WEEK1.task4;
 
 import java.util.ArrayList;
 import java.util.List;

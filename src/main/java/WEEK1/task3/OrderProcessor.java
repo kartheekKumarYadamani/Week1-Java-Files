@@ -1,6 +1,4 @@
-package WEEK1.task3.Service;
-
-import WEEK1.task3.Entity.Order;
+package WEEK1.task3;
 
 @FunctionalInterface
 public interface OrderProcessor {

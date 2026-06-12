@@ -1,4 +1,4 @@
-package WEEK1.task6.Entity;
+package WEEK1.task6;
 
 public class Notification {
 

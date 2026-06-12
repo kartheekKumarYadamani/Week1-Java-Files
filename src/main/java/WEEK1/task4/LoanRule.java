@@ -1,6 +1,4 @@
-package WEEK1.task4.Functional;
-
-import WEEK1.task4.Entity.Customer;
+package WEEK1.task4;
 
 @FunctionalInterface
 public interface LoanRule {
