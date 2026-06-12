@@ -1,11 +1,12 @@
 package WEEK1.task9;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 class InterviewFeedback {
     private Integer studentId;
@@ -115,44 +116,76 @@ class InterviewFeedback {
 }
 
 class InterviewFeedbackService{
-  Function<InterviewFeedback,Double>  overallrating=interviewfeedback->(interviewfeedback.getCodingRating()+interviewfeedback.getCommunicationRating()+interviewfeedback.getConfidenceRating()+
-          interviewfeedback.getProblemSolvingRating())/5;
-  Predicate<InterviewFeedback> isPlacementEligible=placementeligible->
-          placementeligible.getCodingRating()>=6 && overallrating.apply(placementeligible)>=6;
-  Function<Double,String> performanceStatus=performance->{
-          if(performance>=8)return "Excellent";
-          else if(performance>=6)return "Good";
-          else if(performance>=4)return "Average";
-          else return "Needs Improvement";
-  };
+    Function<InterviewFeedback,Double> overallRating=feedback->(feedback.getTechnicalRating()+feedback.getCommunicationRating()+feedback.getCodingRating()+feedback.getConfidenceRating()+feedback.getProblemSolvingRating())/5;
 
+    Function<Double,String> performanceStatus=rating->{
+        if(rating>=8)return "Excellent";
+        else if(rating>=6)return "Good";
+        else if(rating>=4)return "Average";
+        else return "Needs Improvement";
+    };
+
+    Predicate<InterviewFeedback> placementEligible=feedback->overallRating.apply(feedback)>=6&&feedback.getCodingRating()>=6;
+
+    Function<InterviewFeedback,List<String>> suggestions=feedback->{
+
+        List<String> suggestionList=new ArrayList<>();
+
+        if(feedback.getTechnicalRating()<6)suggestionList.add("Improve Technical Skills");
+        if(feedback.getCommunicationRating()<6)suggestionList.add("Improve Communication");
+        if(feedback.getCodingRating()<6)suggestionList.add("Improve Coding");
+        if(feedback.getConfidenceRating()<6)suggestionList.add("Improve Confidence");
+        if(feedback.getProblemSolvingRating()<6)suggestionList.add("Improve System Design Basics");
+
+        return suggestionList;
+
+    };
 }
 class Test {
     public static void main(String[] args) {
-        InterviewFeedback interviewFeedback = new InterviewFeedback(101, "Sai", 8.6, 8.0, 8.6, 9.0, 9.7,
-                List.of("What is java", "OOPS", "Spring"), List.of("Consistent", "Good communication", "Nice coding"), List.of("BoilerplateCodeUsing", "NoStandards"));
-        InterviewFeedbackService interviewFeedbackService = new InterviewFeedbackService();
-        double overallrating = interviewFeedbackService.overallrating.apply(interviewFeedback);
-        String performance = interviewFeedbackService.performanceStatus.apply(overallrating);
-        Map<String,List<String>> suggestions=new HashMap<>();
-        suggestions.put("Excellent",List.of("Improve Communication","Improve real world exposure"));
-        suggestions.put("Good",List.of("Improve Coding","Improve System Design"));
-        suggestions.put("Average",List.of("Improve Communication","Improve real world exposure","Improve Coding"));
-        suggestions.put("Needs Improvement",List.of("Improve Communication","Improve Coding","Practice More"));
-        Consumer< Map<String,List<String>>> finalResult=s->{s.get(performance).forEach(st->System.out.print(st+","));
-        };
+        List<InterviewFeedback> students=List.of(
+                new InterviewFeedback(101,"Ravi",8.0,7.0,8.0,8.0,8.0,
+                        List.of("Java"),List.of("Coding"),List.of("Communication")),
+                new InterviewFeedback(102,"Kiran",5.0,4.0,5.0,4.0,4.0,
+                        List.of("Spring"),List.of("Coding"),List.of("Confidence")),
+                new InterviewFeedback(103,"Sai",9.0,9.0,9.0,9.0,9.0,
+                        List.of("Streams"),List.of("Good"),List.of())
+        );
+        InterviewFeedbackService service=new InterviewFeedbackService();
 
-        Consumer<InterviewFeedback> finalresult = result -> {
-            System.out.println("Student : " + result.getStudentName());
-            System.out.printf("Overall Rating : %.2f\n" ,overallrating);
-            System.out.println("Performance : "+performance);
-            if (interviewFeedbackService.isPlacementEligible.test(interviewFeedback)) {
-                System.out.println("Placement Eligible : YES");
-            } else System.out.println("Placement Eligible : NO");
-            System.out.print("Suggestions : ");
-            finalResult.accept(suggestions);
-        };
+        students.stream()
+                .sorted(Comparator.comparing(service.overallRating).reversed())
+                .forEach(student->{
 
-        finalresult.accept(interviewFeedback);
+                    Double overall=service.overallRating.apply(student);
+
+                    System.out.println("\nStudent : "+student.getStudentName());
+                    System.out.printf("Overall Rating : %.2f\n",overall);
+                    System.out.println("Performance : "+service.performanceStatus.apply(overall));
+                    System.out.println("Placement Eligible : "+(service.placementEligible.test(student)?"YES":"NO"));
+
+                    List<String> suggestion=service.suggestions.apply(student);
+
+                    System.out.println("Suggestions :");
+
+                    if(suggestion.isEmpty())System.out.println("Ready For Placement");
+                    else suggestion.forEach(System.out::println);
+
+                });
+
+        System.out.println("\nGrouped By Performance");
+
+        Map<String,List<InterviewFeedback>> grouped=
+                students.stream()
+                        .collect(Collectors.groupingBy(student->service.performanceStatus.apply(service.overallRating.apply(student))));
+
+        grouped.forEach((status,list)->System.out.println(status+" -> "+list.size()));
+
+        System.out.println("\nNon Eligible Students");
+
+        students.stream()
+                .filter(service.placementEligible.negate())
+                .forEach(student->System.out.println(student.getStudentName()+" -> "+service.suggestions.apply(student)));
+
     }
 }
