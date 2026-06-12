@@ -1,6 +1,4 @@
-package WEEK1.task6.Functional;
-
-import WEEK1.task6.Entity.Notification;
+package WEEK1.task6;
 
 @FunctionalInterface
 public interface NotificationSender {

@@ -1,8 +1,5 @@
 package WEEK1.task3;
 
-import WEEK1.task3.Entity.Order;
-import WEEK1.task3.Service.OrderProcessor;
-
 import java.util.List;
 
 public class Test {

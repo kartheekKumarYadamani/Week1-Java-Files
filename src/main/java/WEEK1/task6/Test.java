@@ -1,8 +1,5 @@
 package WEEK1.task6;
 
-import WEEK1.task6.Entity.Notification;
-import WEEK1.task6.Service.NotificationService;
-
 public class Test {
 
     public static void main(String[] args) {

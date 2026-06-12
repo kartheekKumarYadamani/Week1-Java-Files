@@ -1,9 +1,5 @@
 package WEEK1.task2;
 
-import WEEK1.task2.Entity.Course;
-import WEEK1.task2.Entity.Student;
-import WEEK1.task2.Service.RecommendationService;
-
 import java.util.List;
 import java.util.function.Consumer;
 

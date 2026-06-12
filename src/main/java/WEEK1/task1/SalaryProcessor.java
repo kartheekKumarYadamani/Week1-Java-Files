@@ -1,6 +1,4 @@
-package WEEK1.task1.Service;
-
-import WEEK1.task1.Entity.Employee;
+package WEEK1.task1;
 
 @FunctionalInterface
 public interface SalaryProcessor {

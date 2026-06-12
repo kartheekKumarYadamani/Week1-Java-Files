@@ -1,8 +1,5 @@
 package WEEK1.task5;
 
-import WEEK1.task5.Entity.Student;
-import WEEK1.task5.Service.PlacementService;
-
 import java.util.List;
 
 public class Test {

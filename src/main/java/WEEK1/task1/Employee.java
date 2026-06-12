@@ -1,4 +1,4 @@
-package WEEK1.task1.Entity;
+package WEEK1.task1;
 
 public class Employee {
 
